@@ -3,25 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0b1220;
+  --bg-elevated: #121a2b;
+  --card: #151d2e;
+  --text: #e8eef7;
+  --muted: #94a3b8;
+  --accent: #5eead4;
+  --accent-soft: rgba(94, 234, 212, 0.12);
+  --coral: #ef6f5e;
+  --line: rgba(255, 255, 255, 0.08);
+  --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --sans: "DM Sans", system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: dark;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Soft atmosphere — not dating-app glitter */
+.bg-atmosphere {
+  background:
+    radial-gradient(ellipse 80% 50% at 90% 0%, rgba(94, 234, 212, 0.08), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 10% 100%, rgba(239, 111, 94, 0.06), transparent 45%),
+    linear-gradient(165deg, #07101c 0%, #0b1220 45%, #0e1628 100%);
+}
+
+.font-display {
+  font-family: var(--font-instrument), var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full bg-[#5eead4] px-6 py-3 text-sm font-semibold text-[#042f2e] transition hover:bg-[#99f6e4];
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10;
 }

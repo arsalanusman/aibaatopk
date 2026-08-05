@@ -1,101 +1,119 @@
-import Image from "next/image";
+import Link from "next/link";
+import { SiteHeader } from "@/components/SiteHeader";
+import { TrustStrip } from "@/components/TrustStrip";
+import { PersonaCard } from "@/components/PersonaCard";
+import { PERSONAS } from "@/lib/personas";
 
-export default function Home() {
+export default function HomePage() {
+  const featured = PERSONAS.filter((p) => p.safe).slice(0, 4);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <SiteHeader />
+      <main>
+        {/* Hero — brand first, one job */}
+        <section className="relative mx-auto flex min-h-[min(88dvh,760px)] max-w-5xl flex-col justify-end px-4 pb-16 pt-20 sm:pb-24 sm:pt-28">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#5eead4]/80">
+            Private AI · Roman Urdu
+          </p>
+          <h1 className="font-display mt-4 max-w-xl text-[2.75rem] leading-[1.05] text-white sm:text-6xl">
+            Jab dil kare,
+            <br />
+            baat kar lo.
+          </h1>
+          <p className="mt-5 max-w-md text-[15px] leading-7 text-slate-400">
+            Sirf fictional AI characters. Koi stranger, koi match, koi public profile nahi — private room
+            aapki language mein.
+          </p>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Link href="/discover" className="btn-primary">
+              AI characters dekho
+            </Link>
+            <Link href="/about" className="btn-ghost">
+              Kaise kaam karta hai
+            </Link>
+          </div>
+          <p className="mt-6 text-[12px] text-slate-500">
+            Pehle 3 free messages · bina login · phone/CNIC nahi
+          </p>
+        </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+        <TrustStrip />
+
+        <section className="mx-auto max-w-5xl px-4 py-16">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <h2 className="font-display text-3xl text-white sm:text-4xl">Aaj kis tarah baat chahiye?</h2>
+              <p className="mt-2 text-sm text-slate-500">
+                Yeh sab AI hain · real insan nahi · labels “listener / dost / mentor”
+              </p>
+            </div>
+            <Link href="/discover" className="shrink-0 text-sm font-semibold text-[#5eead4]">
+              Sab dekho →
+            </Link>
+          </div>
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+            {featured.map((p) => (
+              <PersonaCard key={p.id} p={p} />
+            ))}
+          </div>
+        </section>
+
+        <section className="border-t border-white/[0.06] bg-white/[0.02] py-16">
+          <div className="mx-auto max-w-5xl px-4">
+            <h2 className="font-display text-center text-3xl text-white">3 simple steps</h2>
+            <ol className="mx-auto mt-12 grid max-w-3xl gap-10 sm:grid-cols-3">
+              {[
+                { n: "01", t: "Character choose", d: "AI badge wale companion pick karo" },
+                { n: "02", t: "Free try", d: "3 messages bina account" },
+                { n: "03", t: "Private baat", d: "Chaaho to baad mein email signup" },
+              ].map((s) => (
+                <li key={s.n} className="text-center sm:text-left">
+                  <span className="text-[11px] font-semibold tracking-[0.2em] text-[#5eead4]">{s.n}</span>
+                  <p className="mt-2 font-semibold text-white">{s.t}</p>
+                  <p className="mt-1 text-sm text-slate-500">{s.d}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-2xl px-4 py-16 text-center">
+          <h2 className="font-display text-3xl text-white">Kyun trust karein?</h2>
+          <ul className="mt-6 space-y-2 text-left text-sm leading-7 text-slate-400">
+            <li>• No phone number ya CNIC</li>
+            <li>• Chats sirf aapke account (future) / device pe private</li>
+            <li>• Real dating / match system bilkul nahi</li>
+            <li>• Messages AI replies ke liye LLM providers ko ja sakte hain — Privacy pe open</li>
+            <li>
+              • Support:{" "}
+              <a className="text-[#5eead4] underline-offset-2 hover:underline" href="mailto:support@baato.pk">
+                support@baato.pk
+              </a>
+            </li>
+          </ul>
+          <Link href="/discover" className="btn-primary mt-10 inline-flex">
+            Try AI chat
+          </Link>
+        </section>
+
+        <footer className="border-t border-white/[0.06] py-10 text-center text-xs text-slate-500">
+          <p className="font-display text-lg text-slate-300">ai.baato</p>
+          <p className="mt-2">Private Roman Urdu AI companions · Not Baato Maps · Not a dating app</p>
+          <div className="mt-4 flex justify-center gap-4">
+            <Link href="/about" className="hover:text-white">
+              About
+            </Link>
+            <Link href="/privacy" className="hover:text-white">
+              Privacy
+            </Link>
+            <a href="mailto:privacy@baato.pk" className="hover:text-white">
+              privacy@baato.pk
+            </a>
+          </div>
+          <p className="mt-6">© {new Date().getFullYear()} ai.baato</p>
+        </footer>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    </>
   );
 }
