@@ -1,22 +1,8 @@
-# ai.baato (aibaatopk)
+# Baato — aibaatopk (ai.baato.pk)
 
-New product surface for **https://ai.baato.pk** — private Roman Urdu **AI companions**, not the legacy marketing dump of baato.pk.
+Full product UI for private Roman Urdu **AI companions** (not dating).
 
-## Why this repo exists
-
-Built from product + design direction (Grok trust discussion + Baato /m learnings):
-
-- Feel **safe & professional**, not a dating app
-- “AI Companion” badges, roles like Listener / Dost / Mentor
-- Trust strip: no phone/CNIC · private · not dating · clear privacy
-- Guest **3 free messages** local try (LLM wire-up later)
-- Calm navy + teal accents (not purple “AI SaaS purple” or dating pink)
-
-## Stack
-
-- Next.js 14 App Router · TypeScript · Tailwind
-
-## Local
+## Run
 
 ```bash
 cd D:\Data\aibaatopk
@@ -24,27 +10,27 @@ npm install
 npm run dev
 ```
 
-Open **http://localhost:3000**
+Open http://localhost:3020 (or whatever port is free).
 
-Optional hosts: `127.0.0.1 ai.baato.pk` then `http://ai.baato.pk:3000`
+## Screens (complete)
 
-## Routes
+| Route | Purpose |
+|-------|---------|
+| `/` | Landing: hero, trust bar, cards, how-it-works, trust list, CTA, footer |
+| `/discover` | All characters + filters |
+| `/search` | Search by name/role |
+| `/chat/[id]` | Guest chat (3 free) |
+| `/login` `/signup` | Auth forms (UI ready) |
+| `/profile` | Guest profile CTAs |
+| `/settings` | Guest quota reset + links |
+| `/about` `/privacy` | Trust copy |
 
-| Path | Purpose |
-|------|---------|
-| `/` | Trust-first landing |
-| `/discover` | Persona grid |
-| `/chat/[id]` | Guest mock chat |
-| `/about` | What we are |
-| `/privacy` | Plain privacy |
+## Mobile
 
-## Next (production)
+Bottom nav: Home · Search · New Chat · Settings · Profile  
+Top bar: logo + hamburger menu (drawer)
 
-- Wire real LLM via Baato APIs or own backend
-- Point Cloudflare / nginx `ai.baato.pk` at this app (separate deploy) OR monorepo later
-- Signup + Mongo only when you graduate guest → account
+## Next
 
-## Relation to `dastaan` / baato.pk
-
-- **baato.pk** = existing production Baato
-- **aibaatopk** = clean AI-first brand at ai.baato.pk (no force-redirect to main marketing)
+- Wire real LLM/auth from main Baato APIs
+- Deploy to ai.baato.pk

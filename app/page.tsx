@@ -1,90 +1,145 @@
 import Link from "next/link";
-import { TopBar } from "@/components/TopBar";
+import { AppShell, PageHero } from "@/components/AppShell";
 import { TrustBar } from "@/components/TrustBar";
 import { CompanionRow, PortraitCard } from "@/components/CompanionCards";
-import { BottomNav } from "@/components/BottomNav";
 import { PERSONAS } from "@/lib/personas";
 
+const STEPS = [
+  { n: "01", t: "Character choose karo", d: "Listener, dost, mentor — AI badge wale" },
+  { n: "02", t: "Free try", d: "3 messages bina account, phone nahi" },
+  { n: "03", t: "Private baat", d: "Chaaho to baad mein free account" },
+];
+
 export default function HomePage() {
-  const grid = PERSONAS.slice(0, 4);
-  const list = PERSONAS.slice(0, 5);
+  const featured = PERSONAS.filter((p) => p.featured);
+  const restPreview = PERSONAS.slice(0, 6);
 
   return (
-    <>
-      {/* —— Desktop / tablet (mockup web dark) —— */}
-      <div className="hidden min-h-dvh md:block">
-        <TopBar mode="desktop" />
-        <main className="mx-auto max-w-6xl px-6 pb-24 pt-6">
-          <section className="flex flex-col items-center text-center">
-            <h1 className="max-w-3xl text-5xl font-bold leading-[1.1] tracking-tight text-white lg:text-6xl">
-              Jab dil kare, baat kar lo.
-            </h1>
-            <p className="mt-5 max-w-xl text-[16px] leading-7 text-slate-400">
-              Sirf fictional AI characters. Real people nahi. Dating nahi.
-            </p>
-            <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-              <Link href="/discover" className="text-[15px] font-semibold text-[#2dd4bf] transition hover:text-[#5eead4]">
-                Explore Characters →
-              </Link>
-              <Link href="/discover" className="btn-teal !rounded-xl !px-8">
-                Try for Free
-              </Link>
-            </div>
-          </section>
+    <AppShell>
+      {/* Hero */}
+      <PageHero
+        title="Jab dil kare, baat kar lo."
+        sub="Sirf fictional AI characters. Real people nahi. Dating nahi. Short, safe, private conversations."
+        actions={
+          <>
+            <Link href="/discover" className="btn-ghost-teal">
+              Explore Characters →
+            </Link>
+            <Link href="/discover" className="btn-teal !px-8">
+              Try for Free
+            </Link>
+          </>
+        }
+      />
 
-          <div className="mt-14">
-            <TrustBar />
-          </div>
-
-          <section className="mt-16">
-            <h2 className="text-center text-3xl font-bold tracking-tight text-white lg:text-4xl">
-              Aaj kis tarah ki baat chahiye?
-            </h2>
-            <p className="mt-2 text-center text-sm text-slate-500">
-              Har card pe AI badge · real insan nahi
-            </p>
-            <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
-              {grid.map((p) => (
-                <PortraitCard key={p.id} p={p} />
-              ))}
-            </div>
-            <div className="mt-10 text-center">
-              <Link href="/discover" className="btn-outline !rounded-full">
-                More characters
-              </Link>
-            </div>
-          </section>
-        </main>
+      <div className="anim-up anim-delay-3 mx-auto mt-12 max-w-5xl px-4 sm:px-6">
+        <TrustBar />
       </div>
 
-      {/* —— Mobile (mockup phone) —— */}
-      <div className="flex min-h-dvh flex-col md:hidden">
-        <TopBar mode="mobile" />
-        <main className="flex-1 px-4 pb-28 pt-2">
-          <h1 className="text-[2rem] font-bold leading-[1.15] tracking-tight text-white">
-            Jab dil kare,
-            <br />
-            baat kar lo.
-          </h1>
-          <p className="mt-3 max-w-sm text-[14px] leading-6 text-slate-400">
-            Short, safe, non-dating conversations with private AI companions.
-          </p>
-
-          <div className="mt-8 space-y-3">
-            {list.map((p) => (
-              <CompanionRow key={p.id} p={p} />
-            ))}
-          </div>
-
-          <Link
-            href="/discover"
-            className="mt-6 block text-center text-sm font-semibold text-[#2dd4bf]"
-          >
-            All AI companions →
+      {/* Mobile-style list (all screens, compact on desktop as secondary) */}
+      <section className="mx-auto mt-14 max-w-lg px-4 lg:hidden">
+        <div className="mb-4 flex items-end justify-between">
+          <h2 className="text-lg font-semibold text-white">AI companions</h2>
+          <Link href="/discover" className="text-xs font-semibold text-[#2dd4bf]">
+            See all
           </Link>
-        </main>
-        <BottomNav />
-      </div>
-    </>
+        </div>
+        <div className="space-y-3">
+          {restPreview.map((p) => (
+            <CompanionRow key={p.id} p={p} />
+          ))}
+        </div>
+      </section>
+
+      {/* Portrait grid */}
+      <section className="mx-auto mt-16 max-w-6xl px-4 sm:px-6 lg:mt-20">
+        <div className="text-center">
+          <h2 className="section-title">Aaj kis tarah ki baat chahiye?</h2>
+          <p className="section-sub mx-auto max-w-lg">
+            Har card pe role badge · AI Companion / Listener / Mentor · real insan nahi
+          </p>
+        </div>
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-5">
+          {(featured.length ? featured : PERSONAS.slice(0, 4)).map((p) => (
+            <PortraitCard key={p.id} p={p} />
+          ))}
+        </div>
+        <div className="mt-8 hidden grid-cols-2 gap-4 md:grid lg:grid-cols-4">
+          {PERSONAS.filter((p) => !p.featured)
+            .slice(0, 4)
+            .map((p) => (
+              <PortraitCard key={p.id} p={p} />
+            ))}
+        </div>
+        <div className="mt-10 text-center">
+          <Link href="/discover" className="btn-outline !rounded-full !px-8">
+            More characters
+          </Link>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section id="how" className="mx-auto mt-20 max-w-5xl px-4 sm:px-6">
+        <div className="glass-panel px-6 py-12 sm:px-10">
+          <h2 className="section-title text-center">Kaise kaam karta hai</h2>
+          <ol className="mx-auto mt-12 grid max-w-3xl gap-10 sm:grid-cols-3">
+            {STEPS.map((s) => (
+              <li key={s.n} className="text-center sm:text-left">
+                <span className="text-[11px] font-semibold tracking-[0.22em] text-[#2dd4bf]">{s.n}</span>
+                <p className="mt-2 text-lg font-semibold text-white">{s.t}</p>
+                <p className="mt-1 text-sm leading-6 text-slate-500">{s.d}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* Trust honesty */}
+      <section className="mx-auto mt-20 max-w-2xl px-4 text-center sm:px-6">
+        <h2 className="section-title">Kyun trust karein?</h2>
+        <ul className="mt-8 space-y-3 text-left text-[15px] leading-7 text-slate-400">
+          <li className="flex gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+            <span className="text-[#2dd4bf]">✓</span>
+            No phone number ya CNIC free try ke liye
+          </li>
+          <li className="flex gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+            <span className="text-[#2dd4bf]">✓</span>
+            Real dating / match / public profile bilkul nahi
+          </li>
+          <li className="flex gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+            <span className="text-[#2dd4bf]">✓</span>
+            Chats private framing — dusre users aapki baat nahi dekhte
+          </li>
+          <li className="flex gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3">
+            <span className="text-[#2dd4bf]">✓</span>
+            AI replies LLM providers se aa sakte hain — Privacy pe clearly likha
+          </li>
+        </ul>
+        <Link href="/privacy" className="btn-ghost-teal mt-6 inline-flex">
+          Privacy policy →
+        </Link>
+      </section>
+
+      {/* CTA band */}
+      <section className="mx-auto mt-20 max-w-5xl px-4 sm:px-6">
+        <div className="relative overflow-hidden rounded-[28px] border border-[#2dd4bf]/20 bg-gradient-to-br from-[#0f766e]/40 via-[#0e1422] to-[#121a2b] px-6 py-12 text-center sm:px-12">
+          <div className="pointer-events-none absolute -right-10 top-0 h-40 w-40 rounded-full bg-[#2dd4bf]/15 blur-3xl" />
+          <h2 className="relative text-3xl font-bold text-white sm:text-4xl">Private AI chat shuru?</h2>
+          <p className="relative mx-auto mt-3 max-w-md text-sm leading-6 text-slate-300">
+            Pehle free try · nickname + email baad mein. Sensitive data mat share karo.
+          </p>
+          <div className="relative mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/discover" className="btn-teal !px-8">
+              Characters dekho
+            </Link>
+            <Link href="/signup" className="btn-outline">
+              Free account
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="h-10" />
+    </AppShell>
   );
 }

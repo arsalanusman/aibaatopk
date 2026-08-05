@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { consumeGuestMessage, getGuestLeft, GUEST_MSG_LIMIT } from "@/lib/guest";
 import { getPersona } from "@/lib/personas";
 
@@ -13,6 +13,7 @@ export default function ChatPage() {
   const params = useParams();
   const id = String(params?.id || "");
   const persona = getPersona(id);
+  const endRef = useRef<HTMLDivElement>(null);
 
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
@@ -25,17 +26,22 @@ export default function ChatPage() {
       setMsgs([
         {
           role: "ai",
-          text: `Hey — main ${persona.name} hoon (${persona.role}). Yeh fictional AI hai, real insan nahi. ${persona.blurb}`,
+          text: `Salam — main ${persona.name} hoon (${persona.role}). Yeh fictional AI hai, real insan nahi. ${persona.blurb} Aram se likho.`,
         },
       ]);
     }
   }, [persona]);
 
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [msgs, busy]);
+
   if (!persona) {
     return (
-      <div className="flex min-h-dvh items-center justify-center bg-[#070b14]">
+      <div className="flex min-h-dvh flex-col items-center justify-center gap-4 bg-[#070b14] px-4">
+        <p className="text-slate-400">Character nahi mila.</p>
         <Link href="/discover" className="btn-teal">
-          Back to characters
+          Characters
         </Link>
       </div>
     );
@@ -45,6 +51,10 @@ export default function ChatPage() {
     e.preventDefault();
     const text = input.trim();
     if (!text || busy) return;
+    if (getGuestLeft() <= 0) {
+      setLeft(0);
+      return;
+    }
     if (!consumeGuestMessage()) {
       setLeft(0);
       return;
@@ -58,25 +68,29 @@ export default function ChatPage() {
         ...m,
         {
           role: "ai",
-          text: `(${persona.name}) Samajh gaya. Demo reply — production pe real AI lagega. Private · dating nahi.`,
+          text: `(${persona.name}) “${text.slice(0, 100)}${text.length > 100 ? "…" : ""}” — samajh gaya. Abhi demo reply hai; production pe real model. Private · dating nahi.`,
         },
       ]);
       setBusy(false);
-    }, 550);
+    }, 650);
   };
 
   return (
     <div className="mx-auto flex h-[100dvh] max-w-lg flex-col bg-[#070b14]">
       <header className="flex items-center gap-3 border-b border-white/10 px-3 py-3">
-        <Link href="/discover" className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-white">
+        <Link
+          href="/discover"
+          className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-lg text-white"
+          aria-label="Back"
+        >
           ←
         </Link>
-        <div className="relative h-11 w-11 overflow-hidden rounded-xl">
+        <div className="relative h-11 w-11 overflow-hidden rounded-xl ring-1 ring-white/10">
           <Image src={persona.avatar} alt="" fill className="object-cover object-top" sizes="44px" />
         </div>
         <div className="min-w-0 flex-1">
           <p className="truncate font-semibold text-white">{persona.name}</p>
-          <p className="text-[11px] font-medium text-[#2dd4bf]">{persona.role}</p>
+          <p className="text-[11px] font-medium text-[#2dd4bf]">{persona.role} · AI only</p>
         </div>
         <span className="rounded-full bg-white/5 px-2.5 py-1 text-[11px] tabular-nums text-slate-300">
           {left}/{GUEST_MSG_LIMIT}
@@ -84,6 +98,10 @@ export default function ChatPage() {
       </header>
 
       <div className="flex-1 space-y-3 overflow-y-auto px-3 py-4">
+        <p className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-2 text-[11px] leading-relaxed text-slate-500">
+          Real insan nahi · dating nahi · {GUEST_MSG_LIMIT} free messages is device pe. Sensitive personal data mat
+          share karo.
+        </p>
         {msgs.map((m, i) => (
           <div
             key={i}
@@ -96,11 +114,25 @@ export default function ChatPage() {
             {m.text}
           </div>
         ))}
-        {left <= 0 ? (
-          <p className="rounded-2xl border border-[#2dd4bf]/25 bg-[#2dd4bf]/10 p-4 text-sm text-slate-200">
-            Free try complete. Full product pe login jald connect hoga.
-          </p>
+        {busy ? (
+          <div className="mr-auto rounded-2xl border border-white/10 bg-[#121826] px-4 py-3 text-sm text-slate-500">
+            Typing…
+          </div>
         ) : null}
+        {left <= 0 ? (
+          <div className="rounded-2xl border border-[#2dd4bf]/25 bg-[#2dd4bf]/10 p-4 text-sm text-slate-200">
+            Free try khatam. Account banao jab full AI wire ho — pehle{" "}
+            <Link href="/signup" className="font-semibold text-[#2dd4bf] underline">
+              Sign up
+            </Link>{" "}
+            ya{" "}
+            <Link href="/discover" className="font-semibold text-[#2dd4bf] underline">
+              dusra character
+            </Link>
+            .
+          </div>
+        ) : null}
+        <div ref={endRef} />
       </div>
 
       <form
@@ -112,7 +144,7 @@ export default function ChatPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={left <= 0 || busy}
-            placeholder="Roman Urdu mein likho…"
+            placeholder={left <= 0 ? "Limit full" : "Roman Urdu mein likho…"}
             className="min-w-0 flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3.5 text-[14px] text-white outline-none placeholder:text-slate-600 focus:border-[#2dd4bf]/45"
           />
           <button

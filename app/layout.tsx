@@ -14,8 +14,15 @@ export const metadata: Metadata = {
     template: "%s · Baato",
   },
   description:
-    "Jab dil kare, baat kar lo. Fictional AI characters. Real people nahi. Dating nahi.",
+    "Jab dil kare, baat kar lo. Fictional AI characters. Real people nahi. Dating nahi. Free try bina phone.",
   metadataBase: new URL("https://ai.baato.pk"),
+  openGraph: {
+    title: "Baato — Private AI chat",
+    description: "Roman Urdu AI companions. Not a dating app.",
+    url: "https://ai.baato.pk",
+    siteName: "Baato",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
