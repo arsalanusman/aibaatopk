@@ -1,65 +1,88 @@
 export type Persona = {
   id: string;
   name: string;
-  role: string;
+  role: "AI Listener" | "AI Companion" | "AI Mentor";
+  roleColor: string;
   blurb: string;
-  /** Soft pastel avatar initial color */
-  tone: string;
-  safe: boolean;
+  avatar: string;
+  accent: string;
 };
 
-/** Fictional AI companions — not real people, not a match marketplace. */
 export const PERSONAS: Persona[] = [
   {
     id: "meher",
     name: "Meher",
-    role: "Calm Listener",
-    blurb: "Mature baat, dheemi awaz, judgment free sunna.",
-    tone: "#3d5a5b",
-    safe: true,
+    role: "AI Listener",
+    roleColor: "#3b82f6",
+    blurb: "Mature sunne wali · calm baat",
+    avatar: "/personas/meher.png",
+    accent: "#1e3a5f",
   },
   {
     id: "sana",
     name: "Sana",
-    role: "Soft Dost",
-    blurb: "Dil halka karne wali, narmi se reply.",
-    tone: "#4a5568",
-    safe: true,
+    role: "AI Companion",
+    roleColor: "#8b5cf6",
+    blurb: "Soft dost · narmi se",
+    avatar: "/personas/sana.png",
+    accent: "#2d1f3d",
   },
   {
     id: "usman",
     name: "Usman",
-    role: "Steady Mentor",
-    blurb: "Practical mashwara, bhai-dost energy — romance nahi pehle.",
-    tone: "#2c5282",
-    safe: true,
+    role: "AI Mentor",
+    roleColor: "#0ea5e9",
+    blurb: "Steady mashwara · practical",
+    avatar: "/personas/usman.png",
+    accent: "#0f2a3a",
   },
   {
     id: "eshal",
     name: "Eshal",
-    role: "Clear Helper",
-    blurb: "Plans, study, roz-marra — short aur saaf.",
-    tone: "#2f4f4f",
-    safe: true,
+    role: "AI Companion",
+    roleColor: "#64748b",
+    blurb: "Clear helper · short replies",
+    avatar: "/personas/eshal.png",
+    accent: "#1c2434",
   },
   {
     id: "zoya",
     name: "Zoya",
-    role: "Light Chat",
-    blurb: "Campus vibe, halki mazaaq — pressure free.",
-    tone: "#553c2a",
-    safe: true,
+    role: "AI Companion",
+    roleColor: "#a16207",
+    blurb: "Campus vibe · halki mazaaq",
+    avatar: "/personas/zoya.png",
+    accent: "#2a2118",
   },
   {
     id: "kabir",
     name: "Kabir",
-    role: "Optional Close",
-    blurb: "Clean close talk — clearly optional, forced nahi.",
-    tone: "#3c366b",
-    safe: false,
+    role: "AI Companion",
+    roleColor: "#059669",
+    blurb: "Clean close talk · optional",
+    avatar: "/personas/kabir.png",
+    accent: "#0f2e24",
+  },
+  {
+    id: "alya",
+    name: "Alya",
+    role: "AI Companion",
+    roleColor: "#db2777",
+    blurb: "Office calm · soft company",
+    avatar: "/personas/alya.png",
+    accent: "#2e1a24",
+  },
+  {
+    id: "rida",
+    name: "Rida",
+    role: "AI Companion",
+    roleColor: "#7c3aed",
+    blurb: "Playful close · clear AI",
+    avatar: "/personas/rida.png",
+    accent: "#221a30",
   },
 ];
 
-export function getPersona(id: string): Persona | undefined {
+export function getPersona(id: string) {
   return PERSONAS.find((p) => p.id === id);
 }

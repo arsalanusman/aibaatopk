@@ -1,48 +1,40 @@
-import { SiteHeader } from "@/components/SiteHeader";
-import { PersonaCard } from "@/components/PersonaCard";
+import { TopBar } from "@/components/TopBar";
+import { PortraitCard } from "@/components/CompanionCards";
+import { BottomNav } from "@/components/BottomNav";
 import { PERSONAS } from "@/lib/personas";
 
 export const metadata = {
-  title: "Discover AI companions",
-  description: "Pick a fictional AI — Calm Listener, Soft Dost, Mentor. Real people nahi.",
+  title: "Characters",
+  description: "Aaj kis tarah ki baat chahiye? Baato AI companions.",
 };
 
 export default function DiscoverPage() {
-  const calm = PERSONAS.filter((p) => p.safe);
-  const optional = PERSONAS.filter((p) => !p.safe);
-
   return (
-    <>
-      <SiteHeader />
-      <main className="mx-auto max-w-5xl px-4 pb-20 pt-8">
-        <h1 className="font-display text-3xl text-white sm:text-4xl">AI companions</h1>
-        <p className="mt-2 max-w-lg text-sm leading-6 text-slate-500">
-          Har card pe <span className="text-slate-300">AI Companion</span> badge — yeh real insan nahi. Dating /
-          match bilkul nahi.
-        </p>
-
-        <h2 className="mt-10 text-[13px] font-semibold uppercase tracking-wide text-slate-500">
-          Listeners & dost (default)
-        </h2>
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {calm.map((p) => (
-            <PersonaCard key={p.id} p={p} />
+    <div className="min-h-dvh pb-24 md:pb-12">
+      <TopBar mode="desktop" />
+      <main className="mx-auto max-w-6xl px-4 pb-10 pt-4 sm:px-6">
+        <div className="mb-6 flex flex-wrap gap-2 md:justify-center">
+          {["Trust ✓", "Verified AI", "Private"].map((t) => (
+            <span
+              key={t}
+              className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[11px] font-medium text-slate-300"
+            >
+              {t}
+            </span>
           ))}
         </div>
+        <h1 className="text-center text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+          Aaj kis tarah ki baat chahiye?
+        </h1>
+        <p className="mt-3 text-center text-sm text-slate-500">Baato AI Companions · Character selection</p>
 
-        {optional.length ? (
-          <>
-            <h2 className="mt-12 text-[13px] font-semibold uppercase tracking-wide text-slate-500">
-              Optional · pehle calm ones try karo
-            </h2>
-            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {optional.map((p) => (
-                <PersonaCard key={p.id} p={p} />
-              ))}
-            </div>
-          </>
-        ) : null}
+        <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-5">
+          {PERSONAS.map((p) => (
+            <PortraitCard key={p.id} p={p} />
+          ))}
+        </div>
       </main>
-    </>
+      <BottomNav />
+    </div>
   );
 }

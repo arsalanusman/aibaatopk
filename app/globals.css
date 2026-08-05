@@ -3,17 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --bg: #0b1220;
-  --bg-elevated: #121a2b;
-  --card: #151d2e;
-  --text: #e8eef7;
+  --bg: #070b14;
+  --bg-card: rgba(18, 24, 38, 0.72);
+  --teal: #2dd4bf;
+  --teal-hover: #5eead4;
+  --ink: #f8fafc;
   --muted: #94a3b8;
-  --accent: #5eead4;
-  --accent-soft: rgba(94, 234, 212, 0.12);
-  --coral: #ef6f5e;
-  --line: rgba(255, 255, 255, 0.08);
-  --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
-  --sans: "DM Sans", system-ui, sans-serif;
+  --line: rgba(255, 255, 255, 0.1);
 }
 
 html {
@@ -23,30 +19,27 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
+  color: var(--ink);
   background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
 }
 
-/* Soft atmosphere — not dating-app glitter */
-.bg-atmosphere {
+.bg-baato {
   background:
-    radial-gradient(ellipse 80% 50% at 90% 0%, rgba(94, 234, 212, 0.08), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 10% 100%, rgba(239, 111, 94, 0.06), transparent 45%),
-    linear-gradient(165deg, #07101c 0%, #0b1220 45%, #0e1628 100%);
+    radial-gradient(ellipse 90% 55% at 50% -10%, rgba(45, 212, 191, 0.12), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 40%, rgba(59, 130, 246, 0.08), transparent 50%),
+    radial-gradient(ellipse 40% 35% at 0% 80%, rgba(139, 92, 246, 0.06), transparent 45%),
+    linear-gradient(180deg, #050810 0%, #070b14 40%, #0a1020 100%);
 }
 
-.font-display {
-  font-family: var(--font-instrument), var(--serif);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-}
-
-.btn-primary {
-  @apply inline-flex items-center justify-center rounded-full bg-[#5eead4] px-6 py-3 text-sm font-semibold text-[#042f2e] transition hover:bg-[#99f6e4];
-}
-
-.btn-ghost {
-  @apply inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10;
+@layer components {
+  .btn-teal {
+    @apply inline-flex items-center justify-center rounded-xl bg-[#2dd4bf] px-6 py-3 text-sm font-semibold text-[#042f2e] shadow-[0_8px_24px_rgba(45,212,191,0.25)] transition hover:bg-[#5eead4] active:scale-[0.98];
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-xl border border-white/25 bg-transparent px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10;
+  }
+  .glass-panel {
+    @apply rounded-2xl border border-white/10 bg-white/[0.04] shadow-[0_20px_60px_rgba(0,0,0,0.35)] backdrop-blur-xl;
+  }
 }
