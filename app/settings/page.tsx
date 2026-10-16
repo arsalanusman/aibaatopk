@@ -48,7 +48,8 @@ export default function SettingsPage() {
             { href: "/about", t: "About" },
             { href: "/privacy", t: "Privacy policy" },
             { href: "/profile", t: "Profile" },
-            { href: "mailto:support@baato.pk", t: "Contact support" },
+            { href: "/support", t: "Support chat" },
+            { href: "mailto:support@baato.pk", t: "Email support" },
           ].map((l) => (
             <Link
               key={l.href}

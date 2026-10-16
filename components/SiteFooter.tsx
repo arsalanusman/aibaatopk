@@ -66,6 +66,11 @@ export function SiteFooter() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">Help</p>
             <ul className="mt-3 space-y-2 text-sm text-slate-400">
               <li>
+                <Link className="hover:text-white" href="/support">
+                  Support chat
+                </Link>
+              </li>
+              <li>
                 <a className="hover:text-white" href="mailto:support@baato.pk">
                   support@baato.pk
                 </a>
